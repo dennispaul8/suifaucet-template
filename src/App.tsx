@@ -36,13 +36,13 @@ function App() {
 
             <div className="flex justify-between items-center text-sm mb-4">
               <span className="text-gray-300">Chain Selection</span>
-              <button className="text-blue-400 hover:underline flex items-center gap-1">
+              <button className="text-blue-400 hover:underline flex items-center gap-1 text-xs">
                 <ClockIcon size={16} color="#60A5FA" />
                 Rate Limits
               </button>
             </div>
 
-            <div className="flex justify-between items-center text-sm mb-4">
+            <div className="flex justify-between text-sm items-center mb-4">
               <span className="text-gray-300">Testnet</span>
               <button className=" hover:bg-blue-600 px-3 py-1 flex items-center gap-1 rounded text-blue-400 text-xs">
                 <DropIcon size={16} color="#60A5FA" />
@@ -52,7 +52,7 @@ function App() {
 
             <select
               name="chain"
-              className="w-full p-2 rounded bg-white/10 border border-white/20 text-sm mb-4 focus:outline-none "
+              className="w-full text-xs md:text-md p-2 rounded bg-white/10 border border-white/20 text-sm mb-4 focus:outline-none "
             >
               <option className="bg-gray-800 text-white" value="">
                 Select Chain
@@ -71,9 +71,9 @@ function App() {
               className="w-full p-2 rounded bg-white/10 border border-white/20 text-sm text-white placeholder-gray-400 mb-4 focus:outline-none"
             />
 
-            <button className="w-full bg-[#050911] hover:bg-blue-600 cursor-pointer py-2 rounded text-white font-medium flex items-center justify-center gap-2 transition duration-200">
+            <button className="w-full bg-[#050911] hover:bg-blue-600 cursor-pointer py-2 rounded text-xs md:text-md text-white font-medium flex items-center justify-center gap-2 transition duration-200">
               Request Tokens
-              <ArrowRightIcon size={15} />
+              <ArrowRightIcon size={16} />
             </button>
           </div>
         </div>
