@@ -7,8 +7,11 @@ import {
 } from "@phosphor-icons/react";
 import "./App.css";
 import Navbar from "./components/Navbar";
+import { useState } from "react";
+import RateLimitModal from "./components/RateLimitModal";
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="bg-[url(../public/sui-bg.png)] bg-no-repeat bg-cover bg-[#171620] min-h-screen">
       <Navbar />
@@ -36,7 +39,10 @@ function App() {
 
             <div className="flex justify-between items-center text-sm mb-4">
               <span className="text-gray-300">Chain Selection</span>
-              <button className="text-blue-400 hover:underline flex items-center gap-1 text-xs">
+              <button
+                onClick={() => setShowModal(true)}
+                className="text-blue-400 hover:underline flex items-center gap-1 text-xs"
+              >
                 <ClockIcon size={16} color="#60A5FA" />
                 Rate Limits
               </button>
@@ -60,9 +66,6 @@ function App() {
               <option className="bg-gray-800 text-white" value="sui">
                 Sui
               </option>
-              <option className="bg-gray-800 text-white" value="eth">
-                Ethereum
-              </option>
             </select>
 
             <input
@@ -78,6 +81,7 @@ function App() {
           </div>
         </div>
       </div>
+      <RateLimitModal open={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 }
