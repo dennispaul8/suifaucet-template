@@ -41,7 +41,7 @@ function App() {
               <span className="text-gray-300">Chain Selection</span>
               <button
                 onClick={() => setShowModal(true)}
-                className="text-blue-400 hover:underline flex items-center gap-1 text-xs"
+                className="text-blue-400 hover:underline cursor-pointer flex items-center gap-1 text-xs md:text-sm"
               >
                 <ClockIcon size={16} color="#60A5FA" />
                 Rate Limits
@@ -50,7 +50,7 @@ function App() {
 
             <div className="flex justify-between text-sm items-center mb-4">
               <span className="text-gray-300">Testnet</span>
-              <button className=" hover:bg-blue-600 px-3 py-1 flex items-center gap-1 rounded text-blue-400 text-xs">
+              <button className=" px-3 py-1 flex items-center gap-1 rounded text-blue-400 text-xs md:text-sm">
                 <DropIcon size={16} color="#60A5FA" />
                 SUI
               </button>

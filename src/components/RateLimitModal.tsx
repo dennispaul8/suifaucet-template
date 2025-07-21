@@ -9,15 +9,29 @@ type Props = {
 export default function RateLimitModal({ open, onClose }: Props) {
   if (!open) return null;
 
+  const handleBackdropClick = () => {
+    onClose();
+  };
+
+  const stopPropagation = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent closing when clicking inside modal
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-      <div className="bg-[#0f0f0f] border border-[#60A5FA] rounded-2xl p-6 w-[90%] max-w-md text-white relative shadow-xl">
+    <div
+      onClick={handleBackdropClick}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
+    >
+      <div
+        onClick={stopPropagation}
+        className="bg-[#0f0f0f] border border-[#60A5FA] rounded-2xl p-6 w-[90%] max-w-md text-white relative shadow-xl"
+      >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 rounded-full border border-[#60A5FA] p-1 hover:bg-green-600/20"
+          className="absolute top-4 right-4 rounded-full  p-1 hover:bg-green-600/20"
         >
-          <XIcon size={16} color="#60A5FA" />
+          <XIcon size={20} color="#60A5FA" />
         </button>
 
         <h2 className="text-lg md:text-xl font-semibold flex items-center gap-2 text-[#60A5FA]">
