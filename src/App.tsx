@@ -1,4 +1,10 @@
-import { useState } from "react";
+// import { useState } from "react";
+import {
+  ArrowRightIcon,
+  ClockIcon,
+  DropIcon,
+  InfoIcon,
+} from "@phosphor-icons/react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 
@@ -7,31 +13,39 @@ function App() {
     <div className="bg-[url(../public/sui-bg.png)] bg-no-repeat bg-cover bg-[#171620] min-h-screen">
       <Navbar />
       <div className="p-10 min-h-screen flex items-center justify-center">
-        <div className="w-[700px] bg-gradient-to-b from-gray to-[#1e293b] rounded-2xl flex items-center justify-center px-4 py-10">
+        <div className="w-full md:w-[700px] bg-gradient-to-b from-gray to-[#1e293b] rounded-2xl flex items-center justify-center px-4 py-10">
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg w-full p-6 text-white">
-            <h1 className="text-2xl font-semibold mb-2 text-center">
+            <h1 className="text-xl md:text-2xl font-semibold mb-2 text-center">
               Sui Faucet
             </h1>
-            <p className="text-center text-sm text-gray-300 mb-6">
+            <p className="text-center text-xs md:text-sm text-gray-300 mb-6">
               Get free testnet tokens for development
             </p>
 
-            <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <h3 className="text-sm font-medium mb-1">Supported Network</h3>
+            <div className="bg-white/5 justify-center rounded-lg p-4 mb-4">
+              <h3 className="text-sm font-medium mb-1 flex items-center gap-2">
+                <InfoIcon size={16} color="#60A5FA" />
+                Supported Network
+              </h3>
               <hr className="border-gray-500 mb-2" />
-              <p className="text-sm text-gray-300">SUI</p>
+              <p className="text-sm text-gray-300 flex items-center gap-2">
+                <DropIcon size={16} color="#60A5FA" />
+                SUI
+              </p>
             </div>
 
             <div className="flex justify-between items-center text-sm mb-4">
               <span className="text-gray-300">Chain Selection</span>
-              <button className="text-blue-400 hover:underline">
+              <button className="text-blue-400 hover:underline flex items-center gap-1">
+                <ClockIcon size={16} color="#60A5FA" />
                 Rate Limits
               </button>
             </div>
 
             <div className="flex justify-between items-center text-sm mb-4">
               <span className="text-gray-300">Testnet</span>
-              <button className="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-white text-xs">
+              <button className=" hover:bg-blue-600 px-3 py-1 flex items-center gap-1 rounded text-blue-400 text-xs">
+                <DropIcon size={16} color="#60A5FA" />
                 SUI
               </button>
             </div>
@@ -57,8 +71,9 @@ function App() {
               className="w-full p-2 rounded bg-white/10 border border-white/20 text-sm text-white placeholder-gray-400 mb-4 focus:outline-none"
             />
 
-            <button className="w-full bg-[#050911] hover:bg-blue-600 cursor-pointer py-2 rounded text-white font-medium transition duration-200">
+            <button className="w-full bg-[#050911] hover:bg-blue-600 cursor-pointer py-2 rounded text-white font-medium flex items-center justify-center gap-2 transition duration-200">
               Request Tokens
+              <ArrowRightIcon size={15} />
             </button>
           </div>
         </div>

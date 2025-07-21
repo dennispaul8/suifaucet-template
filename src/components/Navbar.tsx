@@ -1,9 +1,7 @@
-import { CircleIcon, GithubLogoIcon, SunIcon } from "@phosphor-icons/react";
-import { useState } from "react";
+import { CircleIcon, GithubLogoIcon } from "@phosphor-icons/react";
+// import { useState } from "react";
 
 export default function Navbar() {
-  const [darkMode, setDarkMode] = useState(false);
-
   return (
     <nav className="w-full px-6 py-3 flex items-center justify-between">
       {/* Left: Logo and Beta */}
@@ -27,7 +25,7 @@ export default function Navbar() {
 
         {/* GitHub */}
         <a
-          href="https://github.com/"
+          href="https://github.com/dennispaul8/suifaucet-template"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:text-white"
