@@ -7,11 +7,25 @@ import {
 } from "@phosphor-icons/react";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import { useState } from "react";
 import RateLimitModal from "./components/RateLimitModal";
+
+import { useState } from "react";
+import { isWalletValid } from "r2c-wallet-validator";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
+  const [wallet, setWallet] = useState("");
+  const [isValid, setIsValid] = useState(true);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setWallet(value);
+
+    const result = isWalletValid(value);
+    console.log("Wallet:", value, "| Valid:", result.valid); // ✅ Log validity
+    setIsValid(result.valid);
+  };
+
   return (
     <div className="bg-[url(../public/sui-bg.png)] bg-no-repeat bg-cover bg-[#171620] min-h-screen">
       <Navbar />
@@ -70,9 +84,16 @@ function App() {
 
             <input
               type="text"
+              value={wallet}
+              onChange={handleChange}
               placeholder="Enter a valid wallet address"
               className="w-full p-2 rounded bg-white/10 border border-white/20 text-sm text-white placeholder-gray-400 mb-4 focus:outline-none"
             />
+            {!isValid && (
+              <p className="text-red-500 text-xs mb-2">
+                Invalid wallet address
+              </p>
+            )}
 
             <button className="w-full bg-[#050911] hover:bg-blue-600 cursor-pointer py-2 rounded text-xs md:text-md text-white font-medium flex items-center justify-center gap-2 transition duration-200">
               Request Tokens
