@@ -145,7 +145,16 @@ function App() {
               </p>
             )}
 
-            <button className="w-full bg-[#050911] hover:bg-blue-600 cursor-pointer py-2 rounded text-xs md:text-md text-white font-medium flex items-center justify-center gap-2 transition duration-200">
+            <button
+              disabled={!wallet || !isValid}
+              className={`w-full py-2 rounded text-xs md:text-md font-medium flex items-center justify-center gap-2 transition duration-200
+    ${
+      !wallet || !isValid
+        ? "bg-[#091001] cursor-not-allowed text-gray-300"
+        : "bg-[#050911] hover:bg-blue-600 text-white cursor-pointer"
+    }
+  `}
+            >
               Request Tokens
               <ArrowRightIcon size={16} />
             </button>
