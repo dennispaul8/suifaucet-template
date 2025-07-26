@@ -10,20 +10,70 @@ import Navbar from "./components/Navbar";
 import RateLimitModal from "./components/RateLimitModal";
 
 import { useState } from "react";
-import { isWalletValid } from "r2c-wallet-validator";
+
+async function checkSuiAccountExists(address: string): Promise<boolean> {
+  try {
+    const objectsRes = await fetch("https://fullnode.testnet.sui.io", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: 1,
+        method: "sui_getOwnedObjects",
+        params: [address, { filter: null, options: { showType: false } }],
+      }),
+    });
+
+    const objects = await objectsRes.json();
+    const ownsObjects =
+      Array.isArray(objects?.result?.data) && objects.result.data.length > 0;
+
+    if (ownsObjects) return true;
+
+    // Fallback: Check for non-zero balance
+    const balanceRes = await fetch("https://fullnode.testnet.sui.io", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: 1,
+        method: "suix_getBalance",
+        params: [address],
+      }),
+    });
+
+    const balance = await balanceRes.json();
+    const total = parseInt(balance?.result?.totalBalance || "0", 10);
+
+    return total > 0;
+  } catch (err) {
+    console.error("Sui RPC error:", err);
+    return false;
+  }
+}
 
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [wallet, setWallet] = useState("");
   const [isValid, setIsValid] = useState(true);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
     setWallet(value);
 
-    const result = isWalletValid(value);
-    console.log("Wallet:", value, "| Valid:", result.valid); // ✅ Log validity
-    setIsValid(result.valid);
+    const isFormatValid = /^0x[a-fA-F0-9]{1,64}$/.test(value);
+    if (!isFormatValid) {
+      setIsValid(false);
+      return;
+    }
+
+    const exists = await checkSuiAccountExists(value);
+    setIsValid(exists);
+    console.log("Exists:", exists);
   };
 
   return (
