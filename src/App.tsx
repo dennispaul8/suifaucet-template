@@ -147,7 +147,7 @@ function App() {
 
             <button
               disabled={!wallet || !isValid}
-              className={`w-full py-2 rounded text-xs md:text-md font-medium flex items-center justify-center gap-2 transition duration-200
+              className={`w-full py-3 rounded text-xs md:text-md font-medium flex items-center justify-center gap-2 transition duration-200
     ${
       !wallet || !isValid
         ? "bg-[#091001] cursor-not-allowed text-gray-300"
