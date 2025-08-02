@@ -1,6 +1,6 @@
 ---
 # 🌊 SuiDrop – Sui Testnet Token Faucet
----
+
 SuiDrop is a sleek, developer-friendly testnet faucet interface built with **Vite + React** and powered by **Sui's blockchain infrastructure**. Developers or Users can request testnet tokens using their wallet address or directly connect their wallet via Mysten's dapp-kit integration.
 ---
 
@@ -18,7 +18,7 @@ SuiDrop is a sleek, developer-friendly testnet faucet interface built with **Vit
 
 ### 📸 Demo
 
-## [Live App →](https://suifaucet-template.vercel.app)
+### [Live App →](https://suifaucet-template.vercel.app)
 
 
 ![preview](./screenshot.png)
