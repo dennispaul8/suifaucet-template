@@ -9,9 +9,11 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import RateLimitModal from "./components/RateLimitModal";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { requestTokens } from "./useTokenRequest";
 import { Toaster, toast } from "react-hot-toast";
+
+import { useCurrentAccount } from "@mysten/dapp-kit";
 
 async function checkSuiAccountExists(address: string): Promise<boolean> {
   try {
@@ -64,8 +66,10 @@ function App() {
   const [isValid, setIsValid] = useState(true);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [txHash, setTxHash] = useState("");
+  const [transactionHash, setTransactionHash] = useState("");
   const [selectedChain, setSelectedChain] = useState("");
+
+  const currentAccount = useCurrentAccount();
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
@@ -86,17 +90,28 @@ function App() {
   const handleRequest = async () => {
     setLoading(true);
     setMessage("");
-    setTxHash("");
+    setTransactionHash("");
 
     try {
       const res = await requestTokens(wallet);
 
-      toast.success("✅ Tokens requested successfully!");
-
-      if (res.txHash) {
-        setTxHash(res.txHash);
-        setMessage("");
+      if (res.transactionHash) {
+        setTransactionHash(res.transactionHash);
+        toast.success(
+          <span>
+            Tokens requested!{" "}
+            <a
+              href={`https://suivision.xyz/txblock/${res.transactionHash}?network=testnet`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-blue-300"
+            >
+              View on Explorer
+            </a>
+          </span>
+        );
       } else {
+        toast.success("Tokens requested successfully!");
         setMessage(res.message);
       }
     } catch (err: any) {
@@ -113,6 +128,13 @@ function App() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (currentAccount?.address) {
+      setWallet(currentAccount.address);
+      setIsValid(true);
+    }
+  }, [currentAccount]);
 
   return (
     <div className="bg-[url(../public/sui-bg.png)] bg-no-repeat bg-cover bg-[#171620] min-h-screen">
@@ -203,20 +225,6 @@ function App() {
               {loading ? "Requesting..." : "Request Tokens"}
               {!loading && <ArrowRightIcon size={16} />}
             </button>
-
-            {txHash && (
-              <p className="text-xs text-center mt-3 text-blue-400">
-                View on Explorer:{" "}
-                <a
-                  href={`https://suivision.xyz/txblock/${txHash}?network=testnet`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline"
-                >
-                  {txHash.slice(0, 10)}...{txHash.slice(-6)}
-                </a>
-              </p>
-            )}
           </div>
         </div>
       </div>
