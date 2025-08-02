@@ -59,7 +59,7 @@ function App() {
           <span>
             Tokens requested!{" "}
             <a
-              href={`https://suivision.xyz/txblock/${res.transactionHash}?network=testnet`}
+              href={`https://testnet.suivision.xyz/txblock/${res.transactionHash}`}
               target="_blank"
               rel="noopener noreferrer"
               className="underline text-blue-300"
