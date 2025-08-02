@@ -10,6 +10,8 @@ import Navbar from "./components/Navbar";
 import RateLimitModal from "./components/RateLimitModal";
 
 import { useState } from "react";
+import { requestTokens } from "./useTokenRequest";
+import { Toaster, toast } from "react-hot-toast";
 
 async function checkSuiAccountExists(address: string): Promise<boolean> {
   try {
@@ -60,10 +62,15 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [wallet, setWallet] = useState("");
   const [isValid, setIsValid] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [txHash, setTxHash] = useState("");
+  const [selectedChain, setSelectedChain] = useState("");
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
     setWallet(value);
+    setMessage("");
 
     const isFormatValid = /^0x[a-fA-F0-9]{1,64}$/.test(value);
     if (!isFormatValid) {
@@ -76,9 +83,44 @@ function App() {
     console.log("Exists:", exists);
   };
 
+  const handleRequest = async () => {
+    setLoading(true);
+    setMessage("");
+    setTxHash("");
+
+    try {
+      const res = await requestTokens(wallet);
+
+      toast.success("✅ Tokens requested successfully!");
+
+      if (res.txHash) {
+        setMessage(
+          `View on Explorer: https://suivision.xyz/txblock/${res.txHash}`
+        );
+      } else {
+        setMessage(res.message);
+      }
+    } catch (err: any) {
+      const errorCode = err?.response?.error?.code;
+      const retryAfter = err?.response?.error?.retryAfter;
+
+      if (errorCode === "RATE_LIMIT_EXCEEDED") {
+        toast.error(
+          `Rate limit exceeded. Try again in ${Math.ceil(retryAfter / 1000)}s`
+        );
+      } else {
+        toast.error("Failed to request tokens. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-[url(../public/sui-bg.png)] bg-no-repeat bg-cover bg-[#171620] min-h-screen">
       <Navbar />
+      <Toaster position="top-center" />
+
       <div className="p-10 min-h-screen flex items-center justify-center">
         <div className="w-full md:w-[700px] bg-gradient-to-b from-gray to-[#1e293b] rounded-2xl flex items-center justify-center px-4 py-10">
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg w-full p-6 text-white">
@@ -122,6 +164,8 @@ function App() {
 
             <select
               name="chain"
+              value={selectedChain}
+              onChange={(e) => setSelectedChain(e.target.value)}
               className="w-full text-xs md:text-md p-2 rounded bg-white/10 border border-white/20 text-sm mb-4 focus:outline-none "
             >
               <option className="bg-gray-800 text-white" value="">
@@ -145,19 +189,36 @@ function App() {
               </p>
             )}
 
+            {message && (
+              <p className="text-xs text-center mb-3 text-white">{message}</p>
+            )}
+
             <button
-              disabled={!wallet || !isValid}
-              className={`w-full py-3 rounded text-xs md:text-md font-medium flex items-center justify-center gap-2 transition duration-200
-    ${
-      !wallet || !isValid
-        ? "bg-[#091001] cursor-not-allowed text-gray-300"
-        : "bg-[#050911] hover:bg-blue-600 text-white cursor-pointer"
-    }
-  `}
+              onClick={handleRequest}
+              disabled={!wallet || !isValid || loading || !selectedChain}
+              className={`w-full py-3 rounded text-xs md:text-md font-medium flex items-center justify-center gap-2 transition duration-200 ${
+                !wallet || !isValid || loading
+                  ? "bg-[#091001] cursor-not-allowed text-gray-300"
+                  : "bg-[#050911] hover:bg-blue-600 text-white cursor-pointer"
+              }`}
             >
-              Request Tokens
-              <ArrowRightIcon size={16} />
+              {loading ? "Requesting..." : "Request Tokens"}
+              {!loading && <ArrowRightIcon size={16} />}
             </button>
+
+            {txHash && (
+              <p className="text-xs text-center mt-3 text-blue-400">
+                View on Explorer:{" "}
+                <a
+                  href={`https://suivision.xyz/txblock/${txHash}?network=testnet`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  {txHash.slice(0, 10)}...{txHash.slice(-6)}
+                </a>
+              </p>
+            )}
           </div>
         </div>
       </div>
