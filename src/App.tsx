@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 import RateLimitModal from "./components/RateLimitModal";
 
 import { useState } from "react";
-import { requestTokens } from "../useTokenRequest";
+import { requestTokens } from "./useTokenRequest";
 import { Toaster, toast } from "react-hot-toast";
 
 async function checkSuiAccountExists(address: string): Promise<boolean> {

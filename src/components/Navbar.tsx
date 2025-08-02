@@ -1,5 +1,6 @@
 import { CircleIcon, GithubLogoIcon } from "@phosphor-icons/react";
 // import { useState } from "react";
+import { ConnectButton } from "@mysten/dapp-kit";
 
 export default function Navbar() {
   return (
@@ -10,15 +11,12 @@ export default function Navbar() {
           <span className="text-white">Sui</span>
           <span className="text-blue-600">Drop</span>
         </div>
-        {/* <span className="text-xl border border-gray-600 rounded-full px-2 py-0.5 text-gray-300">
-          Beta
-        </span> */}
       </div>
 
-      {/* Right: Status, GitHub, Theme Toggle */}
+      {/* Right: Status, GitHub, Connect Wallet */}
       <div className="flex items-center space-x-4 text-sm text-gray-300">
         {/* Status */}
-        <div className="flex items-center space-x-1">
+        <div className="hidden sm:flex flex items-center space-x-1">
           <CircleIcon size={16} className="text-[#5CFF1A]" />
           <span>100% online</span>
         </div>
@@ -33,13 +31,11 @@ export default function Navbar() {
           <GithubLogoIcon size={24} />
         </a>
 
-        {/* Theme Toggle */}
-        {/* <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="border border-gray-600 rounded-full p-2"
-        >
-          <SunIcon size={16} />
+        {/* Connect Wallet Button */}
+        {/* <button className="bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm hover:bg-blue-700 transition">
+          Connect Wallet
         </button> */}
+        <ConnectButton />
       </div>
     </nav>
   );

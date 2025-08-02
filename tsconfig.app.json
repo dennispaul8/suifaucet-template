@@ -23,5 +23,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "useTokenRequest.ts"]
+  "include": ["src", "src/useTokenRequest.ts"]
 }
