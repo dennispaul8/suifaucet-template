@@ -66,7 +66,6 @@ function App() {
   const [isValid, setIsValid] = useState(true);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [transactionHash, setTransactionHash] = useState("");
   const [selectedChain, setSelectedChain] = useState("");
 
   const currentAccount = useCurrentAccount();
@@ -90,13 +89,11 @@ function App() {
   const handleRequest = async () => {
     setLoading(true);
     setMessage("");
-    setTransactionHash("");
 
     try {
       const res = await requestTokens(wallet);
 
       if (res.transactionHash) {
-        setTransactionHash(res.transactionHash);
         toast.success(
           <span>
             Tokens requested!{" "}
