@@ -49,7 +49,7 @@ export default function RateLimitModal({ open, onClose }: Props) {
             Rate Limit:
           </h3>
           <p className="mt-1 text-sm">
-            3 requests per week • 1 requests per day
+            3 requests per week • 2 requests per day(12 hours)
           </p>
         </div>
 
@@ -59,10 +59,10 @@ export default function RateLimitModal({ open, onClose }: Props) {
             <LightningIcon size={16} />
             Token Amount per Request:
           </h3>
-          <p className="mt-1 text-sm">1 SUI</p>
+          <p className="mt-1 text-sm">0.05 SUI</p>
           <p className="text-xs text-gray-400 mt-1">
-            Each successful request will send <strong>1 SUI</strong> tokens to
-            your address.
+            Each successful request will send <strong>0.05 SUI</strong> tokens
+            to your address.
           </p>
         </div>
       </div>

@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 import RateLimitModal from "./components/RateLimitModal";
 
 import { useState } from "react";
-import { requestTokens } from "./useTokenRequest";
+import { requestTokens } from "../useTokenRequest";
 import { Toaster, toast } from "react-hot-toast";
 
 async function checkSuiAccountExists(address: string): Promise<boolean> {
@@ -94,9 +94,8 @@ function App() {
       toast.success("✅ Tokens requested successfully!");
 
       if (res.txHash) {
-        setMessage(
-          `View on Explorer: https://suivision.xyz/txblock/${res.txHash}`
-        );
+        setTxHash(res.txHash);
+        setMessage("");
       } else {
         setMessage(res.message);
       }
@@ -105,9 +104,8 @@ function App() {
       const retryAfter = err?.response?.error?.retryAfter;
 
       if (errorCode === "RATE_LIMIT_EXCEEDED") {
-        toast.error(
-          `Rate limit exceeded. Try again in ${Math.ceil(retryAfter / 1000)}s`
-        );
+        const hours = (retryAfter / 3600).toFixed(2);
+        toast.error(`Rate limit exceeded. Try again in ${hours} hour(s).`);
       } else {
         toast.error("Failed to request tokens. Please try again.");
       }

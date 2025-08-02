@@ -1,6 +1,6 @@
 export const requestTokens = async (walletAddress: string) => {
   try {
-    const response = await fetch('/api/request-tokens', {
+  const response = await fetch('/api/request-tokens', {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ walletAddress }),
