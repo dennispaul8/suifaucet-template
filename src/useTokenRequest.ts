@@ -1,4 +1,4 @@
-export const requestTokens = async (walletAddress: string, _metadata?: Record<string, any>) => {
+export const requestTokens = async (walletAddress: string) => {
   try {
     const response = await fetch('/api/request-tokens', {
   method: "POST",
