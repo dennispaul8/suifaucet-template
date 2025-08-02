@@ -195,9 +195,9 @@ function App() {
 
             <button
               onClick={handleRequest}
-              disabled={!wallet || !isValid || loading || !selectedChain}
+              disabled={!wallet || !isValid || !selectedChain || loading}
               className={`w-full py-3 rounded text-xs md:text-md font-medium flex items-center justify-center gap-2 transition duration-200 ${
-                !wallet || !isValid || loading
+                !wallet || !isValid || !selectedChain || loading
                   ? "bg-[#091001] cursor-not-allowed text-gray-300"
                   : "bg-[#050911] hover:bg-blue-600 text-white cursor-pointer"
               }`}
